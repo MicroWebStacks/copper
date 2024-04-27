@@ -9,7 +9,7 @@ Content-Type: application/json
             "repository":   "HomeSmartMesh/website",
             "ref":  "main",
             "path": "repos",
-            "filter":   "content/**/*"
+            "filter":   "content/3dprinting/**/*"
         }
     ]
 }

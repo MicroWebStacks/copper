@@ -16,11 +16,14 @@ def fetch_files():
 
     # Process each entry in the fetch list
     if fetch_list:
+        results = []
         for entry in fetch_list:
             if entry["type"] == "github":
                 print("Fetching files for repository:", entry['repository'])
-                gutl.get_repo(entry, cache_path)
-        return jsonify({"message": "Fetch process initiated"}), 200
+                result = gutl.get_repo(entry, cache_path)
+                entry.update(result)
+                results.append(entry)
+        return jsonify(results), 200
     else:
         return jsonify({"error": "Invalid or missing 'fetch_list' in request"}), 400
 

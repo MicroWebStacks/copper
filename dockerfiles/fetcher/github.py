@@ -5,8 +5,11 @@ import fnmatch
 from pathlib import Path
 from os.path import join
 import utils as utl
+from datetime import datetime
 
 def get_repo(params, cache_path):
+    start = datetime.now()
+    result = {}
     repository  = params["repository"]
     ref         = params["ref"]
     dest_path        = join(cache_path, params["path"],repository)
@@ -29,15 +32,23 @@ def get_repo(params, cache_path):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         # List all file names in the zip
         all_files = zip_ref.namelist()
-        print(f"- {len(all_files)} files")
+        result["total_files"] = len(all_files)
         base_folder = all_files[0].split('/')[0]
         # Filter files based on the given glob pattern
         #filtered_files = [f for f in all_files if Path(f).match(file_filter)]
         filtered_files = [f for f in all_files if fnmatch.fnmatch(f, base_folder+'/'+file_filter)]
-        print(f"- {len(filtered_files)} filtered files")
+        result["filtered_files"] = len(filtered_files)
         # Extract only the filtered files
         for file in filtered_files:
             zip_ref.extract(file, dest_path)
     utl.move_to_parent(join(dest_path,base_folder))
     # Remove the downloaded zip file after extraction
     os.remove(zip_file)
+    size_bytes = utl.dir_size(dest_path)
+    size_text = utl.format_size(size_bytes)
+    result["size_bytes"] = size_bytes
+    result["size_text"] = size_text
+    stop = datetime.now()
+    result["duration"] = str(stop-start)
+    result["duration_text"] = utl.format_duration(stop-start)
+    return result

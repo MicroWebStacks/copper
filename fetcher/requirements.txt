@@ -3,3 +3,4 @@ PyYAML==5.3.1
 requests
 Flask
 gunicorn
+paho-mqtt==1.6.1

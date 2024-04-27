@@ -7,6 +7,10 @@ services:
       - ../cache/fetch:/cache
     ports:
       - 8001:8001
+    networks:
+      - my-network
+    depends_on:
+      - mosquitto
   mosquitto:
     image: eclipse-mosquitto:latest
     container_name: mosquitto
@@ -15,3 +19,9 @@ services:
     volumes:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/log:/mosquitto/log
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true

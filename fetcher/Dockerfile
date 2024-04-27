@@ -12,5 +12,7 @@ COPY *.py /app/
 
 ENV NAME FetcherService
 
-# Command to run the fetch script
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8001", "-t", "300", "server:app"]
+# Command for REST API
+#CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8001", "-t", "300", "server:app"]
+# command for MQTT client
+CMD ["python", "mqtt_client.py"]

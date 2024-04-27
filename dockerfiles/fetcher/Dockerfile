@@ -5,10 +5,10 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Install Python dependencies
-RUN pip install pyyaml requests
+RUN pip install pyyaml requests Flask
 
 # Copy the Python script into the container at /app
 COPY *.py /app/
 
 # Command to run the fetch script
-CMD ["python", "fetch.py"]
+CMD ["python", "server.py"]

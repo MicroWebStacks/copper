@@ -1,0 +1,9 @@
+services:
+  fetcher:
+    build:
+      context: ./dockerfiles/fetcher
+      dockerfile: Dockerfile
+    volumes:
+      - ../cache/fetch:/cache
+    ports:
+      - 8001:8001

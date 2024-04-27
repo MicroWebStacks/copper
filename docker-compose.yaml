@@ -7,3 +7,11 @@ services:
       - ../cache/fetch:/cache
     ports:
       - 8001:8001
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    ports:
+      - 1883:1883
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/log:/mosquitto/log

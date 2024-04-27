@@ -1,4 +1,5 @@
 import requests
+import utils as utl
 
 def send_post_request():
     # Define the URL of the Flask app
@@ -21,7 +22,7 @@ def send_post_request():
     response = requests.post(url, json=payload)
     # Print the status code and response data
     print("Status Code:", response.status_code)
-    print("Response:", response.json())
+    utl.save_json(response.json(),"response.json")
 
 # Call the function to send the request
 send_post_request()

@@ -1,7 +1,7 @@
 services:
   fetcher:
     build:
-      context: ./dockerfiles/fetcher
+      context: ./fetcher
       dockerfile: Dockerfile
     volumes:
       - ../cache/fetch:/cache

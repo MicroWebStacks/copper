@@ -2,9 +2,8 @@ import os
 import requests
 import zipfile
 import fnmatch
-from pathlib import Path
 from os.path import join
-import utils as utl
+from utils import utils as utl
 from datetime import datetime
 
 def get_repo(params, cache_path):

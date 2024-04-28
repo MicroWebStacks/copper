@@ -30,6 +30,8 @@ def process_fetch_list(client,fetch_list):
                 entry.update(result)
                 results.append(entry)
         client.publish("fetcher/completion", json.dumps(results))
+        if("resource" in entry):
+            client.publish(f"fetcher/resources/{entry['resource']}", json.dumps(results))
         return
     except Exception as e:
         print(f"unhandled exception {e}")

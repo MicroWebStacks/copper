@@ -56,6 +56,7 @@ test_fetch_list([
                 "repository": "HomeSmartMesh/raspi",
                 "ref": "master",
                 "path": "repos",
-                "filter": "design/*"
+                "filter": "design/*",
+                "resource": "raspi-design"
             }
         ])

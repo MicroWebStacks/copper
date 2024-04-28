@@ -10,7 +10,8 @@ publish on `fetcher/request`
             "repository":   "HomeSmartMesh/website",
             "ref":  "main",
             "path": "repos",
-            "filter":   "content/3dprinting/**/*"
+            "filter":   "content/3dprinting/**/*",
+            "resource": "markdown-content"
         }
     ]
 }
@@ -26,7 +27,8 @@ smaller content
             "repository":   "HomeSmartMesh/raspi",
             "ref":  "master",
             "path": "repos",
-            "filter":   "design/*"
+            "filter":   "design/*",
+            "resource": "raspi-design"
         }
     ]
 }

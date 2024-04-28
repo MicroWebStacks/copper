@@ -6,5 +6,6 @@ WORKDIR /app
 RUN pip install PyYAML==5.3.1 requests paho-mqtt==1.6.1
 
 COPY *.py /app/
+COPY utils/*.py /app/utils/
 
 CMD ["python", "mqtt_client.py"]

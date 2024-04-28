@@ -1,14 +1,4 @@
 services:
-  fetcher:
-    build:
-      context: ./fetcher
-      dockerfile: mqtt_client.Dockerfile
-    volumes:
-      - ../cache/fetch:/cache
-    ports:
-      - 8001:8001
-    depends_on:
-      - mosquitto
   mosquitto:
     image: eclipse-mosquitto:latest
     container_name: mosquitto
@@ -17,3 +7,20 @@ services:
     volumes:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/log:/mosquitto/log
+  fetcher:
+    build:
+      context: ./fetcher
+      dockerfile: mqtt_client.Dockerfile
+    volumes:
+      - ../cache/fetch:/cache
+    depends_on:
+      - mosquitto
+  pipeline:
+    build:
+      context: ./pipeline
+      dockerfile: Dockerfile
+    volumes:
+      - ../cache/fetch:/cache
+      - ../jobs:/jobs
+    depends_on:
+      - mosquitto

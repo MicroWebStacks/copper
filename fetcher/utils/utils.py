@@ -19,7 +19,8 @@ def load_json(fileName):
 
 def save_json(data,fileName):
     path = dirname(fileName)
-    makedirs(path, exist_ok=True)
+    if(path):
+        makedirs(path, exist_ok=True)
     jfile = open(fileName, "w")
     jfile.write(json.dumps(data, indent=4))
     jfile.close()
@@ -27,7 +28,8 @@ def save_json(data,fileName):
 
 def save_text(data,fileName):
     path = dirname(fileName)
-    makedirs(path, exist_ok=True)
+    if(path):
+        makedirs(path, exist_ok=True)
     jfile = open(fileName, "w")
     jfile.write(data)
     jfile.close()

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 
-import github as gutl
+from utils import github as gutl
 
 app = Flask(__name__)
 

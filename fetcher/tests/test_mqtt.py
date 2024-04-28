@@ -1,6 +1,9 @@
 import json
 import paho.mqtt.client as mqtt
-import utils as utl  # Ensure you have this utility module for saving the JSON
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from utils import utils as utl
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -13,7 +16,6 @@ def on_message(client, userdata, msg):
         response = json.loads(msg.payload.decode())
         print(response)
         utl.save_json(response, "response.json")
-        client.loop_stop()  # Stop the network loop
         client.disconnect()  # Cleanly disconnect the client
         exit(0)
     if msg.topic == "fetcher/confirmation":
@@ -36,21 +38,23 @@ def test_fetch_list(fetch_list):
 
     print("Publishing request to job/request")
     client.publish("fetcher/request", json.dumps(payload))
-    client.loop_start()  # Start the network loop in the background
-    input("Press Enter to stop...\n")  # Keep the script running until you press Enter
-    client.loop_stop()  # Stop the network loop
-    client.disconnect()  # Cleanly disconnect the client
+    try:
+        client.loop_forever()  # Start the blocking network loop
+    except KeyboardInterrupt:
+        pass
+    finally:
+        client.disconnect()  # Ensure disconnection on exit
     return
 
-BROKER = 'mosquitto'
+BROKER = 'localhost'
 PORT = 1883
 
 test_fetch_list([
             {
                 "type": "github",
-                "repository": "HomeSmartMesh/website",
-                "ref": "main",
+                "repository": "HomeSmartMesh/raspi",
+                "ref": "master",
                 "path": "repos",
-                "filter": "content/3dprinting/**/*"
+                "filter": "design/*"
             }
         ])

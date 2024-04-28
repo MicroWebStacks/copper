@@ -8,6 +8,7 @@ from utils import utils as utl
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
     # Subscribe to the completion topic
+    client.subscribe("fetcher/confirmation")
     client.subscribe("fetcher/completion")
 
 def on_message(client, userdata, msg):

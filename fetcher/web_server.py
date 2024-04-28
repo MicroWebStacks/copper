@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from os.path import join, dirname
 
 import github as gutl
 

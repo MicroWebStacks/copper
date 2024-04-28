@@ -2,7 +2,7 @@ services:
   fetcher:
     build:
       context: ./fetcher
-      dockerfile: Dockerfile
+      dockerfile: mqtt_client.Dockerfile
     volumes:
       - ../cache/fetch:/cache
     ports:

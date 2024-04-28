@@ -1,13 +1,6 @@
 import json
 import paho.mqtt.client as mqtt
-from os.path import join, dirname
-
-import github as gutl  # Ensure you have this module available
-
-# Constants
-BROKER = 'localhost'  # Change to your MQTT broker's IP address
-PORT = 1883
-cache_path = "/cache"
+import github as gutl
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -34,6 +27,11 @@ def process_fetch_list(fetch_list):
         return results
     else:
         return {"error": "Invalid or missing 'fetch_list'"}
+
+# Constants
+BROKER = 'mosquitto'
+PORT = 1883
+cache_path = "/cache"
 
 client = mqtt.Client()
 client.on_connect = on_connect

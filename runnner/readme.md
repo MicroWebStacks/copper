@@ -1,14 +1,15 @@
-# Pipeline
-Service for executing an event based dataflow.
+# Runner
+Service for running an event based workflow
 
 # Concept 
 * The input format is a map of Stages and jobs where each provides a python functions entry point.
 
 * Dependencies such as resources and artifacts do not need to be modeled as they are captured from the excution flow using framewrok getters and setters.
 
-* the service can be triggered by a manifest provided on the `pipeline/request` topic.
-
-* the pipeline jobs can optionally be provided as part of the fetch list in a `cache/jobs` folder that can include the stages and jobs manifest
+## triggers
+* a local manifest file passed through an environment variable
+* a manifest provided on the `runner/request` topic.
+* fetch resource published in `fetcher/resources/runner-manifest`
 
 # Details
 example manifest

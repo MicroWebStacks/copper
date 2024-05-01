@@ -42,11 +42,15 @@ a service consists of
     * publishes to services status and completion
     * subscribes to resources triggers as input
     * publishes on resources generation as output
+* optionally for bootstrapping a MANIFEST environemnt variable can be passed to use a local file
 
 ## content locations
 * a core service within copper
 * a local repo service
 * a remote url service
+
+## visualization
+* collection of mosquitto logs allows to trace services publish and subscribe to generate a dependencies graph
 
 ## Events vs REST
 two types of corss services interactions will be used :

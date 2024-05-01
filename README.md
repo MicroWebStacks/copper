@@ -3,6 +3,8 @@ The basic material for creating pipelines
 
 colelction of containers utilities providing services for websites and data management
 
+![concept](./design/concept.drawio.svg)
+
 # Usage
 ```bash
 cd services
@@ -31,10 +33,27 @@ docker compose up
 ![Broker](./design/broker.png)
 
 # Concept
+
+## service structure
+a service consists of
+* a docker container as a Dockerfile or folder
+* an mqtt client
+    * subscribes to services endpoints for requests
+    * publishes to services status and completion
+    * subscribes to resources triggers as input
+    * publishes on resources generation as output
+
+## content locations
+* a core service within copper
+* a local repo service
+* a remote url service
+
+## Events vs REST
 two types of corss services interactions will be used :
-* `slow interaction`
+* Event based
+    * suitable for long running jobs
     * single instance
-    * event based on MQTT
+    * central MQTT broker
 
     A slow interaction is an an operation that
     * can require a long time to process such as more than 30s or minutes or hours.
@@ -42,7 +61,8 @@ two types of corss services interactions will be used :
     * requests do not need to be queued
     * is needed sporadically or scheduled with jobs which preiod is necessarily bigger if not significantly bigger than the time it takes them to complete
 
-* `fast interaction`
+* REST API
+    * suitable for fast running jobs
     * multiple instances of independent clients
     * http REST API
 
@@ -51,6 +71,7 @@ two types of corss services interactions will be used :
     * can be initiated by any number of independent clients
     * requests need to be queued
     * is needed very frequently such as converting a high number of files
+
 
 # TODOs
 * remove PyYaml could not isntall on windows and dependabot alert

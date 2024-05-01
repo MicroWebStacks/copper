@@ -24,3 +24,4 @@ services:
       - ../jobs:/jobs
     depends_on:
       - mosquitto
+      - fetcher

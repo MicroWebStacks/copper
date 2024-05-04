@@ -10,25 +10,55 @@ colelction of containers utilities providing services for websites and data mana
 cd copper
 docker compose up
 ```
-
-* test with a publish on the topic `fetcher/fetch`
+publish on `fetcher/fetch` a list of items to fetch
 
 ```json
-{
-    "fetch_list": [
-        {
-            "type": "github",
-            "repository":   "HomeSmartMesh/raspi",
-            "ref":  "master",
-            "path": "repos",
-            "filter":   "design/*",
-            "resource": "raspi-design"
-        }
-    ]
-}
+[
+    {
+        "type":         "github",
+        "repository":   "HomeSmartMesh/website",
+        "ref":          "main",
+        "filter":       "content/3dprinting/*",
+        "resource":     "markdown-content",
+        "action":       "markdown/build"
+    }
+]
 ```
 
-* the fetcher publishes on confirmation then on completion and on resources
+example response `fetcher/completion`
+
+```json
+[
+  {
+    "type": "github",
+    "repository": "HomeSmartMesh/website",
+    "ref": "main",
+    "filter": "content/3dprinting/*",
+    "resource": "markdown-content",
+    "action": "markdown/build",
+    "path": "/fetch/markdown-content",
+    "total_files": 756,
+    "filtered_files": 114,
+    "size_bytes": 128598393,
+    "size_text": "122 MB 656 KB",
+    "duration": "0:00:33.198159",
+    "duration_text": "33 s 198 ms"
+  }
+]
+```
+## parameters
+* `dest` is optional if it is needed to specify a target path
+```json
+[
+    {
+        "dest": "repos/HomeSmartMesh/website",
+    }
+]
+```
+
+* `action` will publish the same completion result on the provided action topic which can trigger a request of a following service
+
+
 
 ![Broker](./design/broker.png)
 

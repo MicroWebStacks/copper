@@ -7,7 +7,7 @@ colelction of containers utilities providing services for websites and data mana
 
 # Usage
 ```bash
-cd services
+cd copper
 docker compose up
 ```
 
@@ -37,12 +37,20 @@ docker compose up
 ## service structure
 a service consists of
 * a docker container as a Dockerfile or folder
-* an mqtt client
-    * subscribes to services endpoints for requests
-    * publishes to services status and completion
-    * subscribes to resources triggers as input
-    * publishes on resources generation as output
+* an mqtt client to manage services and events
 * optionally for bootstrapping a MANIFEST environemnt variable can be passed to use a local file
+
+## broker API
+* Services lifecycle management
+    * start and stop a service
+    * Lambda single shot a service for a single request
+* Requests
+    * subscribe to offer a service
+    * publish to trigger
+    * publish status and completion
+* Resources
+    * subscribe to consume
+    * publish to produce
 
 ## content locations
 * a core service within copper
@@ -76,6 +84,8 @@ two types of corss services interactions will be used :
     * requests need to be queued
     * is needed very frequently such as converting a high number of files
 
+## docker in docker
+as alternative to wrapping everything in a service API call, it is possible to execute docker commands from within docker with the Docker-in-Docker approach. This requires mounting the docker socket to communicate with the daemon.
 
 # TODOs
 * remove PyYaml could not isntall on windows and dependabot alert

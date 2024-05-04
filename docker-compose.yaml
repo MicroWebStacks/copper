@@ -15,13 +15,3 @@ services:
       - ../cache/fetch:/cache
     depends_on:
       - mosquitto
-  pipeline:
-    build:
-      context: ./pipeline
-      dockerfile: Dockerfile
-    volumes:
-      - ../cache/fetch:/cache
-      - ../jobs:/jobs
-    depends_on:
-      - mosquitto
-      - fetcher

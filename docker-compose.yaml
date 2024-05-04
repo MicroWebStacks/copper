@@ -12,6 +12,6 @@ services:
       context: ./fetcher
       dockerfile: mqtt_client.Dockerfile
     volumes:
-      - ../cache/fetch:/cache
+      - ../cache/fetch:/fetch
     depends_on:
       - mosquitto

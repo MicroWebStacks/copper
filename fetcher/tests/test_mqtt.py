@@ -32,13 +32,8 @@ def test_fetch_list(fetch_list):
 
     client.connect(BROKER, PORT, 60)
 
-    # Prepare the payload
-    payload = {
-        "fetch_list": fetch_list
-    }
-
     print("Publishing request to job/request")
-    client.publish("fetcher/request", json.dumps(payload))
+    client.publish("fetcher/fetch", json.dumps(fetch_list))
     try:
         client.loop_forever()  # Start the blocking network loop
     except KeyboardInterrupt:

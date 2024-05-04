@@ -11,7 +11,11 @@ def get_repo(params, cache_path):
     result = {}
     repository  = params["repository"]
     ref         = params["ref"]
-    dest_path        = join(cache_path, params["path"],repository)
+    if("dest" in params):
+        dest_path        = join(cache_path, params["dest"])
+    else:
+        dest_path        = join(cache_path, params["resource"])
+    result["path"] = dest_path
     file_filter = params["filter"]
     # GitHub URL to download the repository as a zip file
     url = f"https://api.github.com/repos/{repository}/zipball/{ref}"

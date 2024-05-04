@@ -11,7 +11,7 @@ cd copper
 docker compose up
 ```
 
-* test with a publish on the topic `fetcher/request`
+* test with a publish on the topic `fetcher/fetch`
 
 ```json
 {

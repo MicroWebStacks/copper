@@ -1,60 +1,53 @@
 # Fetcher
-Service for fetching data and storing it in cache. Fetcher is an MQTT client subscribed to the `fetcher/request` topic.
+Service for fetching data and storing it in cache. Fetcher is an MQTT client subscribed to the `fetcher/fetch` topic.
 
-# Testing
+# Usage
 
-publish on `fetcher/request`
-
-* `markdown-content`
-```json
-{
-    "fetch_list": [
-        {
-            "type": "github",
-            "repository":   "HomeSmartMesh/website",
-            "ref":  "main",
-            "path": "repos",
-            "filter":   "content/3dprinting/**/*",
-            "resource": "markdown-content"
-        }
-    ]
-}
-```
-
-* `raspi-design`
+publish on `fetcher/fetch`
 
 ```json
-{
-    "fetch_list": [
-        {
-            "type": "github",
-            "repository":   "HomeSmartMesh/raspi",
-            "ref":  "master",
-            "path": "repos",
-            "filter":   "design/*",
-            "resource": "raspi-design"
-        }
-    ]
-}
+[
+    {
+        "type":         "github",
+        "repository":   "HomeSmartMesh/website",
+        "ref":          "main",
+        "filter":       "content/3dprinting/*",
+        "resource":     "markdown-content",
+        "action":       "markdown/build"
+    }
+]
 ```
 
 example response `fetcher/completion`
 
 ```json
 [
+  {
+    "type": "github",
+    "repository": "HomeSmartMesh/website",
+    "ref": "main",
+    "filter": "content/3dprinting/*",
+    "resource": "markdown-content",
+    "action": "markdown/build",
+    "path": "/fetch/markdown-content",
+    "total_files": 756,
+    "filtered_files": 114,
+    "size_bytes": 128598393,
+    "size_text": "122 MB 656 KB",
+    "duration": "0:00:33.198159",
+    "duration_text": "33 s 198 ms"
+  }
+]
+```
+## parameters
+* `dest` is optional if it is needed to specify a target path
+```json
+[
     {
-        "type": "github",
-        "repository": "HomeSmartMesh/raspi",
-        "ref": "master",
-        "path": "repos",
-        "filter": "design/*",
-        "resource": "markdown-content",
-        "total_files": 688,
-        "filtered_files": 22,
-        "size_bytes": 5920465,
-        "size_text": "5 MB 661 KB",
-        "duration": "0:00:03.293742",
-        "duration_text": "3 s 293 ms"
+        "dest": "repos/HomeSmartMesh/website",
     }
 ]
 ```
+
+* `action` will publish the same completion result on the provided action topic which can trigger a request of a following service
+

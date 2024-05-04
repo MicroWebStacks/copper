@@ -5,15 +5,14 @@ import threading
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    client.subscribe("fetcher/request")
+    client.subscribe("fetcher/fetch")
 
 def on_message(client, userdata, msg):
     print(f"Message received on {msg.topic}")
-    if msg.topic == "fetcher/request":
+    if msg.topic == "fetcher/fetch":
         try:
-            data = json.loads(msg.payload.decode())
-            client.publish("fetcher/confirmation", json.dumps(data))
-            fetch_list = data.get('fetch_list')
+            fetch_list = json.loads(msg.payload.decode())
+            client.publish("fetcher/confirmation", json.dumps(fetch_list))
             thread = threading.Thread(target=process_fetch_list,args=(client,fetch_list))
             thread.start()
         except Exception as e:
@@ -29,6 +28,8 @@ def process_fetch_list(client,fetch_list):
                 result = gutl.get_repo(entry, CACHE_PATH)
                 entry.update(result)
                 results.append(entry)
+            if("action" in entry):
+                client.publish(entry["action"], json.dumps(entry))
         client.publish("fetcher/completion", json.dumps(results))
         if("resource" in entry):
             client.publish(f"fetcher/resources/{entry['resource']}", json.dumps(results))
@@ -40,7 +41,7 @@ def process_fetch_list(client,fetch_list):
 # Constants
 BROKER = 'mosquitto'
 PORT = 1883
-CACHE_PATH = "/cache"
+CACHE_PATH = "/fetch"
 
 client = mqtt.Client()
 client.on_connect = on_connect

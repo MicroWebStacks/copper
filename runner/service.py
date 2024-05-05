@@ -1,18 +1,19 @@
 import asyncio
 from aiomqtt import Client
-from utils import utils as utl
 import json
+import yaml
 
-
-async def handle_messages(messages):
-    async for message in messages:
-        print(f"Received message: {message.payload.decode()}")
-        # Break after receiving the first response
-        break
+def load_yaml(fileName):
+    with open(fileName, "r") as stream:
+        try:
+            return yaml.safe_load(stream)
+        except yaml.YAMLError as e:
+            print(e)
+    return
 
 async def run():
     print("async run()")
-    workflow = utl.load_yaml("/app/workflow.yaml")    
+    workflow = load_yaml("/app/workflow.yaml")
     print("workflow loaded - waiting for event")
     async with Client(BROKER) as client:
         await client.publish("runner/status","up")

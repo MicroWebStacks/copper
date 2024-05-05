@@ -25,7 +25,7 @@ publish on `fetcher/fetch` a list of items to fetch
 ]
 ```
 
-example response `fetcher/completion`
+example response `fetcher/finish`
 
 ```json
 [

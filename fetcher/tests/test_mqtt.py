@@ -7,19 +7,19 @@ from utils import utils as utl
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
-    # Subscribe to the completion topic
-    client.subscribe("fetcher/confirmation")
-    client.subscribe("fetcher/completion")
+    # Subscribe to the finish topic
+    client.subscribe("fetcher/start")
+    client.subscribe("fetcher/finish")
 
 def on_message(client, userdata, msg):
-    if msg.topic == "fetcher/completion":
-        print("Completion message received:")
+    if msg.topic == "fetcher/finish":
+        print("Finish message received:")
         response = json.loads(msg.payload.decode())
         print(response)
         utl.save_json(response, "response.json")
         client.disconnect()  # Cleanly disconnect the client
         exit(0)
-    if msg.topic == "fetcher/confirmation":
+    if msg.topic == "fetcher/start":
         print("Confirmation message received:")
         response = json.loads(msg.payload.decode())
         print(response)

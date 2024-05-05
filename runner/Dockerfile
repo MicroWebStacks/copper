@@ -3,7 +3,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-RUN pip install PyYAML==5.3.1 paho-mqtt==1.6.1
+RUN pip install PyYAML==5.3.1 aiomqtt
 
 COPY *.py /app/
 COPY utils/*.py /app/utils/

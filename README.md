@@ -1,7 +1,10 @@
 # Copper
-The basic material for creating pipelines
+Copper is the basic material for creating pipelines. It helps to run local actions with docker.
 
-colelction of containers utilities providing services for websites and data management
+Copper offers three basic services
+- MQTT broker to manage services end points
+- fetcher executes fetch actions such as retrieve repos from github
+- runner bootstraps execution of actions from a yaml workflow file
 
 ![concept](./design/concept.drawio.svg)
 
@@ -10,53 +13,23 @@ colelction of containers utilities providing services for websites and data mana
 cd copper
 docker compose up
 ```
-publish on `fetcher/fetch` a list of items to fetch
+# usage
+example workflow is a list of actions, where each has an `action` field which is an MQTT service endpoint.
+* The item will be published on the action topic
+* the finish topic is awaited for e.g. `fetcher/fetch/finish`
+* The next item is then published
 
-```json
-[
-    {
-        "type":         "github",
-        "repository":   "HomeSmartMesh/website",
-        "ref":          "main",
-        "filter":       "content/3dprinting/*",
-        "resource":     "markdown-content",
-        "action":       "markdown/build"
-    }
-]
+```yaml
+- action: fetcher/fetch
+  type: github
+  repository: MicroWebStacks/astro-big-doc
+  ref: main
+  filter: content/*
+  resource: test-website
+- action: markdown/build
+  resource: test-website
+  path: /fetch/test-website/content
 ```
-
-example response `fetcher/finish`
-
-```json
-[
-  {
-    "type": "github",
-    "repository": "HomeSmartMesh/website",
-    "ref": "main",
-    "filter": "content/3dprinting/*",
-    "resource": "markdown-content",
-    "action": "markdown/build",
-    "path": "/fetch/markdown-content",
-    "total_files": 756,
-    "filtered_files": 114,
-    "size_bytes": 128598393,
-    "size_text": "122 MB 656 KB",
-    "duration": "0:00:33.198159",
-    "duration_text": "33 s 198 ms"
-  }
-]
-```
-## parameters
-* `dest` is optional if it is needed to specify a target path
-```json
-[
-    {
-        "dest": "repos/HomeSmartMesh/website",
-    }
-]
-```
-
-* `action` will publish the same completion result on the provided action topic which can trigger a request of a following service
 
 
 

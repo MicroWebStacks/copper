@@ -7,7 +7,7 @@ Service for running an event based workflow
 * Dependencies such as resources and artifacts do not need to be modeled as they are captured from the excution flow using framewrok getters and setters.
 
 ## triggers
-* a local manifest file passed through an environment variable
+* a local workflow file passed through an environment variable
 * a manifest provided on the `runner/request` topic.
 * fetch resource published in `fetcher/resources/runner-manifest`
 

@@ -28,8 +28,6 @@ def process_fetch_list(client,fetch_list):
                 result = gutl.get_repo(entry, CACHE_PATH)
                 entry.update(result)
                 results.append(entry)
-            if("action" in entry):
-                client.publish(entry["action"], json.dumps(entry))
         client.publish("fetcher/completion", json.dumps(results))
         if("resource" in entry):
             client.publish(f"fetcher/resources/{entry['resource']}", json.dumps(results))

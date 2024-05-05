@@ -15,3 +15,9 @@ services:
       - ../cache/fetch:/fetch
     depends_on:
       - mosquitto
+  runner:
+    build: ./runner
+    volumes:
+      - ../workflow.yaml:/app/workflow.yaml
+    depends_on:
+      - fetcher

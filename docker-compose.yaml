@@ -8,9 +8,7 @@ services:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/log:/mosquitto/log
   fetcher:
-    build:
-      context: ./fetcher
-      dockerfile: mqtt_client.Dockerfile
+    build: ./fetcher
     volumes:
       - ../cache/fetch:/fetch
     depends_on:

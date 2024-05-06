@@ -1,12 +1,10 @@
 services:
   mosquitto:
-    image: eclipse-mosquitto:latest
-    container_name: mosquitto
+    build: ./mosquitto
     ports:
       - 1883:1883
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/log:/mosquitto/log
+      - ..cache/log/mosquitto:/mosquitto/log
   fetcher:
     build: ./fetcher
     volumes:

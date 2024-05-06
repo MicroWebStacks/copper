@@ -8,16 +8,22 @@ Copper offers three basic services
 
 ![concept](./design/concept.drawio.svg)
 
-# Usage
-```bash
-cd copper
-docker compose up
-```
-# usage
-example workflow is a list of actions, where each has an `action` field which is an MQTT service endpoint.
-* The item will be published on the action topic
-* the finish topic is awaited for e.g. `fetcher/fetch/finish`
-* The next item is then published
+# Simple Usage
+see this example repo for how to use copper in a light weight mode with a docker compose file and a workflow file
+
+https://github.com/HomeSmartMesh/website_light/tree/main
+
+
+# Dev usage
+In this repo, copper is cloned as a submodule for development purpose
+
+https://github.com/HomeSmartMesh/website_services
+
+# Workflow
+A workflow is a list of actions, where each has an `action` field. This field represents the MQTT topic on which the service endpoint is provided.
+* A runner service will publish each action entry on its topic to trigger it
+* it will then await the finish topic e.g. `fetcher/fetch/finish`
+* Then continue with the next entry
 
 ```yaml
 - action: fetcher/fetch

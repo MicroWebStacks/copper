@@ -1,3 +1,8 @@
+# Archived
+this repo is archived, but the development continues in another repo where it'S moved to
+
+https://github.com/MicroWebStacks/markdown-rag-services
+
 # Copper
 Copper is the basic material for creating pipelines. It helps to run local actions with docker.
 
